@@ -5,7 +5,6 @@ var db = require('monk')('localhost/nodeblog');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log('start');
   var db = req.db;
   var posts = db.get('posts');
   console.log(posts);
