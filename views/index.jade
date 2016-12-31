@@ -8,7 +8,8 @@ block content
           a(href='/post/show/#{post._id}')
             =post.title
         p.meta posted in #{post.category} by #{post.author} on #{moment(post.date).format("DD-MM-YYYY")}
-        =post.body
+        img(src='/images/uploads/#{post.mainImage}')
+        !=post.body
         a.more(href='/posts/show/#{post._id}') read more
   else
     p.noposts there are no posts to display

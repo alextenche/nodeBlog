@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var expressValidator = require('express-validator');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -10,9 +9,11 @@ var mongo = require('mongodb');
 var db = require('monk')('localhost/nodeblog');
 var multer = require('multer');
 var flash = require('connect-flash');
+var expressValidator = require('express-validator');
 
 var index = require('./routes/index');
 var posts = require('./routes/posts');
+var categories = require('./routes/categories');
 
 var app = express();
 
@@ -22,14 +23,16 @@ app.locals.moment = require('moment');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-var upload = multer({ dest: './public/images/uploads' });
+// handle file uploads
+var upload = multer({ dest: 'public/images/uploads/' })
+// app.use(multer({dest:'./'}).single('singleInputFileName'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 
 // express session
 app.use(session({
@@ -41,22 +44,22 @@ app.use(session({
 // express validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-    var namespace = param.split('.');
-    var root = namespace.shift();
-    var formParam = root;
+    var namespace = param.split('.')
+        , root    = namespace.shift()
+        , formParam = root;
 
-    while (namespace.length) {
+    while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
     }
-
     return {
-      param: formParam,
-      msg: msg,
-      value: value
+      param : formParam,
+      msg   : msg,
+      value : value
     };
   }
 }));
 
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // connect-flash
@@ -73,6 +76,7 @@ app.use(function(req, res, next){
 
 app.use('/', index);
 app.use('/posts', posts);
+app.use('/categories', categories);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -92,4 +96,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+module.exports = upload;
 module.exports = app;
