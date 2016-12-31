@@ -6,20 +6,20 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.15.2",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "express": "~4.14.0",
-    "jade": "~1.11.0",
-    "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0",
-    "mongodb": "*",
-    "monk":"*",
+    "body-parser": "^1.15.2",
     "connect-flash": "*",
-    "express-validator": "*",
-    "express-session": "*",
+    "cookie-parser": "*",
+    "debug": "*",
+    "express": "*",
     "express-messages": "*",
-    "multer": "*",
-    "moment": "*"
+    "express-session": "*",
+    "express-validator": "*",
+    "moment": "*",
+    "mongodb": "*",
+    "monk": "*",
+    "morgan": "*",
+    "multer": "^1.2.1",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "*"
   }
 }

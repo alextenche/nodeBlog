@@ -10,6 +10,8 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next){
+  console.log('--> categories');
+
   var title = req.body.title;
 
   // form validation
